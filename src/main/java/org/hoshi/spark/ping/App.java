@@ -1,16 +1,24 @@
-/**
- * Copyright Vast 2016. All Rights Reserved.
- *
- * http://www.vast.com
- */
 package org.hoshi.spark.ping;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
+
+import static spark.Spark.get;
+import static spark.Spark.port;
 
 /**
- * @author Luka Obradovic (luka@vast.com)
+ * @author robosoul
  */
 public class App {
-    public static final Logger log = LoggerFactory.getLogger(App.class);
+    public static void main(final String[] args) {
+        port(getHerokuAssignedPort());
+        get("/api/v1/ping", (request, response) -> "pong");
+    }
+
+    static int getHerokuAssignedPort() {
+        return Optional
+                .ofNullable(new ProcessBuilder().environment().get("PORT"))
+                .filter(p -> !p.isEmpty())
+                .map(Integer::parseInt)
+                .orElse(4567);
+    }
 }
