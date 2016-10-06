@@ -10,8 +10,14 @@ import static spark.Spark.port;
  */
 public class App {
     public static void main(final String[] args) {
-        port(getHerokuAssignedPort());
-        get("/api/v1/ping", (request, response) -> "pong");
+        int port = getHerokuAssignedPort();
+        System.out.println("Port: " + port);
+
+        port(port);
+        get("/api/v1/ping", (request, response) -> {
+            System.out.println("Pinging");
+            return "pong";
+        });
     }
 
     static int getHerokuAssignedPort() {
