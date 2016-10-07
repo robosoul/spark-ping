@@ -14,7 +14,8 @@ public class App {
         System.out.println("Port: " + port);
 
         port(port);
-        get("/api/v1/ping", (request, response) -> "frame-pong");
+        get("/api/v1/ping", (request, response) -> "pong");
+        get("/api/v1/msg", (request, response) -> "luka <3 bazzu");
     }
 
     static int getHerokuAssignedPort() {
