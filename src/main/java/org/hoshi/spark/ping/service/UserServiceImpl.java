@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Action delete(final String username) {
         logger.info("Deleting '{}'...", username);
-
         final Action action = new Action(username, Action.ActionType.DELETE);
         usersQueue.add(action);
         return action;

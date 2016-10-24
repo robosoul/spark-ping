@@ -76,11 +76,14 @@ public class UserWebService {
                 halt(HttpServletResponse.SC_BAD_REQUEST);
             }
 
-            while (!getUserService().delete(body).isDone()) {
-                // empty
+            final Action action = getUserService().delete(body);
+            while (!action.isDone()) {
+                logger.info("Waiting...");
+                Thread.sleep(5000);
             }
 
-            response.status(HttpServletResponse.SC_ACCEPTED);
+            logger.info("Delete done!");
+            response.status(HttpServletResponse.SC_OK);
             return "";
         }
     }
